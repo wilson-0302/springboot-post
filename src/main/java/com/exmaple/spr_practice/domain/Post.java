@@ -1,28 +1,27 @@
 package com.exmaple.spr_practice.domain;
 
+import com.exmaple.spr_practice.dto.PostDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity @Setter @Getter
-public class Post {
-    Long userId;
+public class Post extends AuditingField{
     @Column(nullable = false) String title;
     @Column(length = 4000) String content;
 
     protected Post() {}
-    private Post(Long userId, String title, String content) {
-        this.userId = userId;
+    private Post(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
-    public static Post of(Long userId, String title, String content) {
-        return new Post(userId, title, content);
+    public static Post of(String title, String content) {
+        return new Post(title, content);
     }
 
-    public DefaultDto.CreateResDto toCreateResDto() {
-        return DefaultDto.CreateResDto.builder().id(getId()).build();
+    public PostDto.CreateResDto toCreateResDto() {
+        return PostDto.CreateResDto.builder().id(getId()).build();
     }
 }

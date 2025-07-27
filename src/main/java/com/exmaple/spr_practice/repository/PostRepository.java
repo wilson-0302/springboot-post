@@ -1,9 +1,10 @@
-package com.example.sprbasic2025.repository;
+package com.exmaple.spr_practice.repository;
 
-import com.example.sprbasic2025.domain.Post;
+import com.exmaple.spr_practice.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostimgRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
+
 }

@@ -15,7 +15,7 @@ public class PostDto {
         String content;
 
         public Post toEntity(){
-            return Post.of(getUserId(), getTitle(), getContent());
+            return Post.of(getTitle(), getContent());
         }
     }
 
@@ -40,40 +40,20 @@ public class PostDto {
 
     @Setter @Getter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
     public static class DetailResDto {
-        Long userId;
+        Long id;
         String title;
         String content;
 
-        String userUsername;
-        String userName;
-    }
-
-    @Setter @Getter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
-    public static class ListReqDto {
-        Long userId;
-        String title;
-        Boolean deleted;
-    }
-
-
-    @Setter @Getter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
-    public static class UpdateReqDto {
-        Long id; //필수!!
-        Boolean deleted;
-    }
-    @Setter @Getter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
-    public static class DetailReqDto {
-        Long id; //필수!!
-    }
-    @Setter @Getter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
-    public static class DetailResDto {
-        Long id;
         Boolean deleted;
         LocalDateTime createdAt;
         LocalDateTime modifiedAt;
     }
+
     @Setter @Getter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
     public static class ListReqDto {
+        Long id;
+        String title;
+        String content;
         Boolean deleted;
     }
 }
