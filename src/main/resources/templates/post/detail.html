@@ -7,7 +7,7 @@
 </head>
 <body>
 detail <br/>
-id : <input type="number" id="input_id" readonly="readonly"/> <br/>
+id : <input type="number" id="input_id" /> <br/>
 deleted : <input type="checkbox" id="input_deleted" /> <br/>
 title : <input type="text" id="input_title" /> <br/>
 content : <input type="text" id="input_content" /> <br/>
@@ -64,7 +64,7 @@ content : <input type="text" id="input_content" /> <br/>
     } else {
       alert("❗ URL에 id가 없습니다.");
     }
-    let tempHref = location.href;
+    //let tempHref = location.href;
     // http://localhost:8080/post/detail/2
     // let tempLastIndexOf = tempHref.lastIndexOf("/");
     // tempHref = tempHref.substring(tempLastIndexOf + 1);
@@ -90,10 +90,9 @@ content : <input type="text" id="input_content" /> <br/>
       data : {
         id : $("#input_id").val()
       },
-      success: function (data, status, xhr) {
+      success: function (data) {
         alert("data : : " + JSON.stringify(data));
         let post = data;
-
         let tempKeys = Object.keys(post);
         for(let each of tempKeys){
           let tempType = $("#input_" + each).attr("type");
@@ -103,11 +102,28 @@ content : <input type="text" id="input_content" /> <br/>
             $("#input_" + each).val(post[each]);
           }
         }
-      },
-      error: function (data, status, err) {
-      },
-      complete: function () {
       }
+      // data : {
+      //   id : $("#input_id").val()
+      // },
+      // success: function (data, status, xhr) {
+      //   alert("data : : " + JSON.stringify(data));
+      //   let post = data;
+      //
+      //   let tempKeys = Object.keys(post);
+      //   for(let each of tempKeys){
+      //     let tempType = $("#input_" + each).attr("type");
+      //     if(tempType === "checkbox"){
+      //       $("#input_" + each).prop("checked", post[each]);
+      //     } else {
+      //       $("#input_" + each).val(post[each]);
+      //     }
+      //   }
+      // },
+      // error: function (data, status, err) {
+      // },
+      // complete: function () {
+      // }
     });
   }
 </script>
