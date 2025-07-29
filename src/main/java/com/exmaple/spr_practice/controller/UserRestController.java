@@ -1,7 +1,7 @@
 package com.exmaple.spr_practice.controller;
 
-import com.exmaple.spr_practice.dto.PostDto;
-import com.exmaple.spr_practice.service.PostService;
+import com.exmaple.spr_practice.dto.UserDto;
+import com.exmaple.spr_practice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/post")
+@RequestMapping("/api/user")
 @RestController
 public class UserRestController {
 
-    final PostService postService;
+    final UserService userService;
 
+    @PostMapping("/login")
+    public ResponseEntity<UserDto.LoginResDto> login(@RequestBody UserDto.LoginReqDto param){
+        return ResponseEntity.ok(userService.login(param));
+    }
     @PostMapping("")
-    public ResponseEntity<PostDto.CreateResDto> create(@RequestBody PostDto.CreateReqDto param){
-        return ResponseEntity.ok(postService.create(param));
+    public ResponseEntity<UserDto.CreateResDto> create(@RequestBody UserDto.CreateReqDto param){
+        return ResponseEntity.ok(userService.create(param));
     }
     @PutMapping("")
-    public ResponseEntity<Void> update(@RequestBody PostDto.UpdateReqDto param){
-        postService.update(param);
+    public ResponseEntity<Void> update(@RequestBody UserDto.UpdateReqDto param){
+        userService.update(param);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("")
-    public ResponseEntity<Void> delete(@RequestBody PostDto.UpdateReqDto param){
-        postService.delete(param);
+    public ResponseEntity<Void> delete(@RequestBody UserDto.UpdateReqDto param){
+        userService.delete(param);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("")
-    public ResponseEntity<PostDto.DetailResDto> detail(PostDto.DetailReqDto param){
-        return ResponseEntity.ok(postService.detail(param));
-    }
-    @GetMapping("/list")
-    public ResponseEntity<List<PostDto.DetailResDto>> list(PostDto.ListReqDto param){
-        return ResponseEntity.ok(postService.list(param));
+    public ResponseEntity<UserDto.DetailResDto> detail(UserDto.DetailReqDto param){
+        return ResponseEntity.ok(userService.detail(param));
     }
 }
