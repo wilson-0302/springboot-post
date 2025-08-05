@@ -1,0 +1,15 @@
+package com.example.spr_practice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@EnableJpaAuditing
+@SpringBootApplication
+public class SprPracticeApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SprPracticeApplication.class, args);
+    }
+
+}

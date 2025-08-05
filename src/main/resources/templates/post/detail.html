@@ -1,16 +1,154 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>post Detail</title>-->
+<!--  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--detail <br/>-->
+<!--id : <input type="number" id="input_id" /> <br/>-->
+<!--deleted : <input type="checkbox" id="input_deleted" /> <br/>-->
+<!--title : <input type="text" id="input_title" /> <br/>-->
+<!--content : <input type="text" id="input_content" /> <br/>-->
+<!--<button onclick="detail_post()">조회하기</button>-->
+<!--<button onclick="update_post()">수정하기</button>-->
+<!--<button onclick="delete_post()">삭제하기</button>-->
+
+<!--<script>-->
+<!--  function delete_post(){-->
+<!--    $.ajax({-->
+<!--      url: '/api/post',-->
+<!--      method: 'DELETE',-->
+<!--      contentType : 'application/json; charset=utf-8',-->
+<!--      data : JSON.stringify({-->
+<!--        id : $("#input_id").val()-->
+<!--      }),-->
+<!--      success: function (data, status, xhr) {-->
+<!--        alert("data : : " + JSON.stringify(data));-->
+<!--      },-->
+<!--      error: function (data, status, err) {-->
+<!--      },-->
+<!--      complete: function () {-->
+<!--      }-->
+<!--    });-->
+<!--  }-->
+<!--  function update_post(){-->
+<!--    $.ajax({-->
+<!--      url: '/api/post',-->
+<!--      method: 'PUT',-->
+<!--      contentType : 'application/json; charset=utf-8',-->
+<!--      data : JSON.stringify({-->
+<!--        id : $("#input_id").val()-->
+<!--        , deleted : $("#input_deleted").prop("checked")-->
+<!--        , title : $("#input_title").val()-->
+<!--        , content : $("#input_content").val()-->
+<!--      }),-->
+<!--      success: function (data, status, xhr) {-->
+<!--        alert("data : : " + JSON.stringify(data));-->
+<!--      },-->
+<!--      error: function (data, status, err) {-->
+<!--      },-->
+<!--      complete: function () {-->
+<!--      }-->
+<!--    });-->
+<!--  }-->
+
+<!--  $(function(){-->
+<!--    const urlParams = new URLSearchParams(window.location.search);-->
+<!--    const id = urlParams.get("id");-->
+
+<!--    if (id) {-->
+<!--      $("#input_id").val(id);-->
+<!--      detail_post();-->
+<!--    } else {-->
+<!--      alert("❗ URL에 id가 없습니다.");-->
+<!--    }-->
+<!--    //let tempHref = location.href;-->
+<!--    // http://localhost:8080/post/detail/2-->
+<!--    // let tempLastIndexOf = tempHref.lastIndexOf("/");-->
+<!--    // tempHref = tempHref.substring(tempLastIndexOf + 1);-->
+<!--    // alert(tempHref);-->
+
+<!--    // let tempArray = tempHref.split("/");-->
+<!--    // if(tempArray.length > 0){-->
+<!--    //   tempHref = tempArray[tempArray.length -1];-->
+<!--    // }-->
+<!--    //-->
+<!--    // tempArray = tempHref.split("?");-->
+<!--    // if(tempArray.length > 0){-->
+<!--    //   tempHref = tempArray[0];-->
+<!--    // }-->
+<!--    // //alert(tempHref);-->
+<!--    // $("#input_id").val(tempHref);-->
+<!--    // detail_post();-->
+<!--  });-->
+<!--  function detail_post(){-->
+<!--    $.ajax({-->
+<!--      url: '/api/post',-->
+<!--      method: 'GET',-->
+<!--      data : {-->
+<!--        id : $("#input_id").val()-->
+<!--      },-->
+<!--      success: function (data) {-->
+<!--        alert("data : : " + JSON.stringify(data));-->
+<!--        let post = data;-->
+<!--        let tempKeys = Object.keys(post);-->
+<!--        for(let each of tempKeys){-->
+<!--          let tempType = $("#input_" + each).attr("type");-->
+<!--          if(tempType === "checkbox"){-->
+<!--            $("#input_" + each).prop("checked", post[each]);-->
+<!--          } else {-->
+<!--            $("#input_" + each).val(post[each]);-->
+<!--          }-->
+<!--        }-->
+<!--      }-->
+<!--      // data : {-->
+<!--      //   id : $("#input_id").val()-->
+<!--      // },-->
+<!--      // success: function (data, status, xhr) {-->
+<!--      //   alert("data : : " + JSON.stringify(data));-->
+<!--      //   let post = data;-->
+<!--      //-->
+<!--      //   let tempKeys = Object.keys(post);-->
+<!--      //   for(let each of tempKeys){-->
+<!--      //     let tempType = $("#input_" + each).attr("type");-->
+<!--      //     if(tempType === "checkbox"){-->
+<!--      //       $("#input_" + each).prop("checked", post[each]);-->
+<!--      //     } else {-->
+<!--      //       $("#input_" + each).val(post[each]);-->
+<!--      //     }-->
+<!--      //   }-->
+<!--      // },-->
+<!--      // error: function (data, status, err) {-->
+<!--      // },-->
+<!--      // complete: function () {-->
+<!--      // }-->
+<!--    });-->
+<!--  }-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>post Detail</title>
+  <title>Post Detail</title>
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
 detail <br/>
-id : <input type="number" id="input_id" /> <br/>
+id : <input type="number" id="input_id" readonly="readonly"/> <br/>
 deleted : <input type="checkbox" id="input_deleted" /> <br/>
+userId : <input type="text" id="input_userId" /> <br/>
 title : <input type="text" id="input_title" /> <br/>
 content : <input type="text" id="input_content" /> <br/>
+img : <input type="text" id="input_img" /> <br/>
+<img id="image_img" style="height: 100px"/><br/>
+imgs :
+<div id="div_imgs"></div><br/>
 <button onclick="detail_post()">조회하기</button>
 <button onclick="update_post()">수정하기</button>
 <button onclick="delete_post()">삭제하기</button>
@@ -55,33 +193,17 @@ content : <input type="text" id="input_content" /> <br/>
   }
 
   $(function(){
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-
-    if (id) {
-      $("#input_id").val(id);
-      detail_post();
-    } else {
-      alert("❗ URL에 id가 없습니다.");
+    let tempHref = location.href;
+    let tempArray = tempHref.split("/");
+    if(tempArray.length > 0){
+      tempHref = tempArray[tempArray.length -1];
     }
-    //let tempHref = location.href;
-    // http://localhost:8080/post/detail/2
-    // let tempLastIndexOf = tempHref.lastIndexOf("/");
-    // tempHref = tempHref.substring(tempLastIndexOf + 1);
-    // alert(tempHref);
-
-    // let tempArray = tempHref.split("/");
-    // if(tempArray.length > 0){
-    //   tempHref = tempArray[tempArray.length -1];
-    // }
-    //
-    // tempArray = tempHref.split("?");
-    // if(tempArray.length > 0){
-    //   tempHref = tempArray[0];
-    // }
-    // //alert(tempHref);
-    // $("#input_id").val(tempHref);
-    // detail_post();
+    tempArray = tempHref.split("?");
+    if(tempArray.length > 0){
+      tempHref = tempArray[0];
+    }
+    $("#input_id").val(tempHref);
+    detail_post();
   });
   function detail_post(){
     $.ajax({
@@ -90,9 +212,10 @@ content : <input type="text" id="input_content" /> <br/>
       data : {
         id : $("#input_id").val()
       },
-      success: function (data) {
+      success: function (data, status, xhr) {
         alert("data : : " + JSON.stringify(data));
         let post = data;
+
         let tempKeys = Object.keys(post);
         for(let each of tempKeys){
           let tempType = $("#input_" + each).attr("type");
@@ -102,28 +225,20 @@ content : <input type="text" id="input_content" /> <br/>
             $("#input_" + each).val(post[each]);
           }
         }
+
+        $("#image_img").attr("src", post["img"]);
+
+        let imgs = post["imgs"];
+        for(let each of imgs) {
+          $("#div_imgs").append(
+                  '<img src="'+each["img"]+'" style="height: 100px"/> <br/>'
+          );
+        }
+      },
+      error: function (data, status, err) {
+      },
+      complete: function () {
       }
-      // data : {
-      //   id : $("#input_id").val()
-      // },
-      // success: function (data, status, xhr) {
-      //   alert("data : : " + JSON.stringify(data));
-      //   let post = data;
-      //
-      //   let tempKeys = Object.keys(post);
-      //   for(let each of tempKeys){
-      //     let tempType = $("#input_" + each).attr("type");
-      //     if(tempType === "checkbox"){
-      //       $("#input_" + each).prop("checked", post[each]);
-      //     } else {
-      //       $("#input_" + each).val(post[each]);
-      //     }
-      //   }
-      // },
-      // error: function (data, status, err) {
-      // },
-      // complete: function () {
-      // }
     });
   }
 </script>
